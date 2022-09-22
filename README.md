@@ -7,5 +7,5 @@
  
 ## Screenshots
 
-![App Screenshot](https://imgur.com/a/EBODG1t)
+![App Screenshot](https://i.imgur.com/d7auoH7.png)
 
