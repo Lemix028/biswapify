@@ -147,7 +147,7 @@ setInterval(() => {
                 line-height: 26px;
                 padding: 24px 24px;
                 border-radius: 16px 16px 0px 0px;
-              }">Biswapify</div>
+              ">Biswapify</div>
                 </div>
           <div sytle="display: grid;
           grid-template-columns: 1fr 1fr;
