@@ -1,0 +1,25 @@
+{
+
+    "description": "Sums rewards up",
+    "manifest_version": 3,
+    "name": "Biswapify",
+    "version": "1.0",
+    "author": "Lemix",
+    "homepage_url": "https://github.com/Lemix028",
+
+
+    "icons": {
+        "48": "icon.png",
+        "96": "icon.png"
+      },
+
+    "content_scripts": [
+        {
+          "matches": ["*://*.biswap.org/pools/stake_bsw"],
+          "js": ["biswapify.js"]
+        }
+      ]
+      
+      
+
+  }
