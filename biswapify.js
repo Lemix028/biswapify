@@ -2,7 +2,7 @@ try {
 document.body.style.border = "1px solid red";
 console.log("Loaded Biswapify");
 setInterval(() => {
-    var rootContainer = document.getElementsByClassName('kVPQOL')[0];
+    var rootContainer = document.getElementById('root').children[0].children[1].children[0].children[1].children[1];
     var bswPrice = Number(document.getElementsByClassName('hiiYWG')[0].innerHTML);
     if(rootContainer.firstChild != null){
         
@@ -15,52 +15,55 @@ setInterval(() => {
         var StakedTokens = [];
         var biswapifyWidget = undefined;
         for (const child of rootContainer.children) {
-            var WidgetInnerContent = child.getElementsByClassName('ffISaY')[0];
+            var WidgetInnerContent = child.children[1];
             if(child.className == "biswapifyWidget"){
                 biswapifyWidget = child;
+                continue;
             }
             if(WidgetInnerContent == undefined)
             {
-                WidgetInnerContent = child.getElementsByClassName('fqKiKh')[0];
-                if(WidgetInnerContent == undefined)
-                WidgetInnerContent = child.getElementsByClassName('dmhnka')[0];
-                
-                if(WidgetInnerContent == undefined)
                     continue;
             } 
-            var StakedBSWContainer = WidgetInnerContent.getElementsByClassName('huNIDp')[0].firstChild;
-            var StakedBSW = StakedBSWContainer.getElementsByClassName('pZlZO')[0].innerHTML;
-            var StakedBSWValue = StakedBSWContainer.getElementsByClassName('inQEff')[0].innerHTML;
-            var BlockTimeContainer = Number(child.getElementsByClassName('fyWIRV')[0]?.firstChild?.firstChild?.getElementsByClassName('ekMRHH')[1]?.getElementsByClassName('hmyuBF')[0]?.innerHTML.replace(/[^\d.-]/g, ''));
-
-            var EarnedContainer = WidgetInnerContent.getElementsByClassName('hdrmpd')[0];
+            var StakedBSWContainer = WidgetInnerContent.children[1].firstChild;
+            var StakedBSW = StakedBSWContainer.children[1].innerHTML;
+            var StakedBSWValue = StakedBSWContainer.children[2].innerHTML;
+            
+            var BlockTimeContainer = Number(child.children[2]?.firstChild?.firstChild?.children[1]?.children[2]?.innerHTML.replace(/[^\d.-]/g, ''));
+            var EarnedContainer = WidgetInnerContent.children[2];
+            
             var EarnedBSW = "0";
             var EarnedBSWValue = "0";
-            if(EarnedContainer == undefined)
-            {
-                EarnedContainer = WidgetInnerContent.getElementsByClassName('kUuiI')[0];
-                if(EarnedContainer != undefined){
-                    EarnedTokens.push({
-                    symbol: EarnedContainer.firstChild.getElementsByClassName('fhUTgb')[0].innerHTML.split(/(\s+)/)[2],
-                    valueToken: Number(EarnedContainer.firstChild.getElementsByClassName('fhUTgb')[0].innerHTML.split(/(\s+)/)[0]),
-                    valueUsd: Number(EarnedContainer.firstChild.getElementsByClassName('fsFiWv')[0].innerHTML.replace(/[^\d.-]/g, '')),
-                    blockTime: BlockTimeContainer}
-                    );
-                    TotalUsdEarned += Number(EarnedContainer.firstChild.getElementsByClassName('fsFiWv')[0].innerHTML.replace(/[^\d.-]/g, ''));
+            
+            if(EarnedContainer != undefined){
+                if(child.children[0].children[1].children[0].firstChild.innerHTML == "Holder Pool"){
+                    EarnedBSW = EarnedContainer.children[0]?.children[1]?.firstChild?.innerHTML;
+                    EarnedBSWValue = (Number(EarnedBSW)*bswPrice).toString();
+                }else {
+                    if(EarnedContainer.children.length == 2){
+                        
+                        EarnedTokens.push({
+                            symbol: EarnedContainer.children[0].children[0].innerHTML.split(/(\s+)/)[2],
+                            valueToken: Number(EarnedContainer.children[0].children[1].innerHTML.split(/(\s+)/)[0]),
+                            valueUsd: Number(EarnedContainer.children[0].children[2].innerHTML.replace(/[^\d.-]/g, '')),
+                            blockTime: BlockTimeContainer}
+                            );
+                    }else {
+                        EarnedTokens.push({
+                            symbol: EarnedContainer.children[1].children[0].innerHTML.split(/(\s+)/)[2],
+                            valueToken: Number(EarnedContainer.children[1].children[1].innerHTML.split(/(\s+)/)[0]),
+                            valueUsd: Number(EarnedContainer.children[1].children[2].innerHTML.replace(/[^\d.-]/g, '')),
+                            blockTime: BlockTimeContainer}
+                            );
+                            TotalUsdEarned += Number(EarnedContainer.children[1].children[2].innerHTML.replace(/[^\d.-]/g, ''));
+            
+                            EarnedBSW = EarnedContainer.children[0].children[1].innerHTML;
+                            EarnedBSWValue = EarnedContainer.children[0].children[2].innerHTML;
+                    }
+                   
                 }
-        
-            } else
-            {
-                EarnedBSW = EarnedContainer.firstChild.getElementsByClassName('fhUTgb')[0].innerHTML;
-                EarnedBSWValue = EarnedContainer.firstChild.getElementsByClassName('fsFiWv')[0].innerHTML;
-                EarnedTokens.push({
-                    symbol: EarnedContainer.children[1].getElementsByClassName('fhUTgb')[0].innerHTML.split(/(\s+)/)[2],
-                    valueToken: Number(EarnedContainer.children[1].getElementsByClassName('fhUTgb')[0].innerHTML.split(/(\s+)/)[0]),
-                    valueUsd: Number(EarnedContainer.children[1].getElementsByClassName('fsFiWv')[0].innerHTML.replace(/[^\d.-]/g, '')),
-                    blockTime: BlockTimeContainer}
-                    );
-                    TotalUsdEarned += Number(EarnedContainer.children[1].getElementsByClassName('fsFiWv')[0].innerHTML.replace(/[^\d.-]/g, ''));
+               
             }
+           
         
             FinalEarnedBSW += Number(EarnedBSW.replace(/[^\d.-]/g, ''));
             FinalEarnedBSWValue += Number(EarnedBSWValue.replace(/[^\d.-]/g, '')); 
